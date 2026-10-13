@@ -1,6 +1,6 @@
 [
   {
-    "repository": "PixelOS-tundra/android_kernel_motorola_tundra",
+    "repository": "PixelOS-Devices/android_kernel_motorola_tundra",
     "target_path": "kernel/motorola/tundra"
   },
   {
@@ -8,7 +8,8 @@
     "target_path": "hardware/motorola"
   },
   {
-    "repository": "PixelOS-tundra/proprietary_vendor_motorola_tundra",
-    "target_path": "vendor/motorola/tundra"
+    "repository": "NoPrincessHere/proprietary_vendor_motorola_tundra",
+    "target_path": "vendor/motorola/tundra",
+    "remote": "gitlab"
   }
 ]
