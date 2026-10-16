@@ -20,6 +20,11 @@
  * again later, so it is given private copies that keep the requested format
  * and dataspace. Stream pointers are translated between the copies and the
  * provider's streams in both directions.
+ *
+ * CamX also sends shutter notifications for regular requests out of order,
+ * which cameraserver treats as a fatal error. Shutters of regular requests are
+ * held back until every earlier regular request got its shutter or failed.
+ * cameraserver keeps the results of a request until its shutter arrives.
  */
 
 #define LOG_TAG "CameraWrapper"
@@ -28,6 +33,7 @@
 #include <errno.h>
 #include <string.h>
 
+#include <map>
 #include <memory>
 #include <mutex>
 #include <unordered_map>
@@ -37,6 +43,7 @@
 #include <hardware/camera_common.h>
 #include <hardware/gralloc.h>
 #include <log/log.h>
+#include <system/camera_metadata.h>
 
 #ifdef __LP64__
 #define STOCK_HAL_PATH "/vendor/lib64/hw/camera.qcom.so"
@@ -61,6 +68,14 @@ struct CallbackOps : camera3_callback_ops_t {
     CameraDevice* device;
 };
 
+// A regular request waiting for its shutter to be sent to the framework
+struct PendingShutter {
+    // Its shutter arrived (msg is valid) or the request failed without one
+    bool done = false;
+    bool hasMsg = false;
+    camera3_notify_msg_t msg;
+};
+
 struct CameraDevice {
     camera3_device_t device;
     camera3_device_ops_t ops;
@@ -72,6 +87,14 @@ struct CameraDevice {
     // Provider stream -> private copy handed to CamX, and back
     std::unordered_map<camera3_stream_t*, std::unique_ptr<camera3_stream_t>> shadows;
     std::unordered_map<camera3_stream_t*, camera3_stream_t*> frameworkStreams;
+
+    // Serializes shutter and error notifications to the framework
+    std::mutex shutterLock;
+    // Regular requests by frame number, in the order their shutters must be sent
+    std::map<uint32_t, PendingShutter> pendingShutters;
+    // Settings of the last request, a request without settings reuses them
+    bool lastStillCapture = false;
+    bool lastZslEnabled = false;
 
     camera3_stream_t* toStock(camera3_stream_t* stream) {
         if (stream == nullptr) return nullptr;
@@ -130,6 +153,50 @@ void overrideDataSpace(camera3_stream_t* stream, uint32_t usage) {
 }
 
 /*
+ * Shutter ordering
+ */
+
+// Sends the shutters at the head of the queue that can go out in order
+void releaseShuttersLocked(CameraDevice* dev) {
+    auto& pending = dev->pendingShutters;
+    while (!pending.empty() && pending.begin()->second.done) {
+        const PendingShutter& shutter = pending.begin()->second;
+        if (shutter.hasMsg) {
+            dev->frameworkCallbacks->notify(dev->frameworkCallbacks, &shutter.msg);
+        }
+        pending.erase(pending.begin());
+    }
+}
+
+// Sends every shutter still held back, for when no more are going to arrive
+void releaseAllShuttersLocked(CameraDevice* dev) {
+    for (const auto& [frameNumber, shutter] : dev->pendingShutters) {
+        if (shutter.hasMsg) {
+            dev->frameworkCallbacks->notify(dev->frameworkCallbacks, &shutter.msg);
+        }
+    }
+    dev->pendingShutters.clear();
+}
+
+// Whether cameraserver orders the shutter of this request with the regular
+// requests, as opposed to reprocess and ZSL still capture requests
+bool isRegularRequest(CameraDevice* dev, const camera3_capture_request_t* request) {
+    if (request->settings != nullptr) {
+        camera_metadata_ro_entry_t entry;
+        dev->lastStillCapture =
+                find_camera_metadata_ro_entry(request->settings, ANDROID_CONTROL_CAPTURE_INTENT,
+                                              &entry) == 0 &&
+                entry.count > 0 && entry.data.u8[0] == ANDROID_CONTROL_CAPTURE_INTENT_STILL_CAPTURE;
+        dev->lastZslEnabled =
+                find_camera_metadata_ro_entry(request->settings, ANDROID_CONTROL_ENABLE_ZSL,
+                                              &entry) == 0 &&
+                entry.count > 0 && entry.data.u8[0] == ANDROID_CONTROL_ENABLE_ZSL_TRUE;
+    }
+
+    return request->input_buffer == nullptr && !(dev->lastStillCapture && dev->lastZslEnabled);
+}
+
+/*
  * Callbacks from CamX
  */
 
@@ -163,7 +230,46 @@ void notify(const camera3_callback_ops_t* ops, const camera3_notify_msg_t* msg) 
         fwMsg.message.error.error_stream = dev->toFramework(msg->message.error.error_stream);
     }
 
+    std::lock_guard<std::mutex> l(dev->shutterLock);
+
+    if (msg->type == CAMERA3_MSG_SHUTTER) {
+        const uint32_t frameNumber = msg->message.shutter.frame_number;
+        auto it = dev->pendingShutters.find(frameNumber);
+        if (it == dev->pendingShutters.end()) {
+            // Reprocess or ZSL still capture request
+            dev->frameworkCallbacks->notify(dev->frameworkCallbacks, &fwMsg);
+            return;
+        }
+
+        if (it != dev->pendingShutters.begin()) {
+            ALOGW("Holding back shutter of frame %u until frame %u", frameNumber,
+                  dev->pendingShutters.begin()->first);
+        }
+        it->second.done = true;
+        it->second.hasMsg = true;
+        it->second.msg = fwMsg;
+        releaseShuttersLocked(dev);
+        return;
+    }
+
     dev->frameworkCallbacks->notify(dev->frameworkCallbacks, &fwMsg);
+
+    if (msg->type == CAMERA3_MSG_ERROR) {
+        switch (msg->message.error.error_code) {
+            case CAMERA3_MSG_ERROR_REQUEST: {
+                // The request failed, no shutter is coming for it
+                auto it = dev->pendingShutters.find(msg->message.error.frame_number);
+                if (it != dev->pendingShutters.end()) {
+                    it->second.done = true;
+                    releaseShuttersLocked(dev);
+                }
+                break;
+            }
+            case CAMERA3_MSG_ERROR_DEVICE:
+                releaseAllShuttersLocked(dev);
+                break;
+        }
+    }
 }
 
 camera3_buffer_request_status_t requestStreamBuffers(
@@ -328,7 +434,26 @@ int processCaptureRequest(const camera3_device_t* device, camera3_capture_reques
         stockRequest.input_buffer = &inputBuffer;
     }
 
-    return dev->stock->ops->process_capture_request(dev->stock, &stockRequest);
+    // Track the request before CamX gets it, its shutter may arrive before
+    // process_capture_request returns
+    bool isRegular;
+    {
+        std::lock_guard<std::mutex> l(dev->shutterLock);
+        isRegular = isRegularRequest(dev, request);
+        if (isRegular) {
+            dev->pendingShutters.emplace(request->frame_number, PendingShutter{});
+        }
+    }
+
+    int ret = dev->stock->ops->process_capture_request(dev->stock, &stockRequest);
+    if (ret != 0 && isRegular) {
+        // The framework does not expect a shutter for a request that was not accepted
+        std::lock_guard<std::mutex> l(dev->shutterLock);
+        dev->pendingShutters.erase(request->frame_number);
+        releaseShuttersLocked(dev);
+    }
+
+    return ret;
 }
 
 void getMetadataVendorTagOps(const camera3_device_t* device, vendor_tag_query_ops_t* ops) {
@@ -343,7 +468,13 @@ void dump(const camera3_device_t* device, int fd) {
 
 int flush(const camera3_device_t* device) {
     CameraDevice* dev = getDevice(device);
-    return dev->stock->ops->flush(dev->stock);
+    int ret = dev->stock->ops->flush(dev->stock);
+
+    // Every request has completed or failed once flush returns
+    std::lock_guard<std::mutex> l(dev->shutterLock);
+    releaseAllShuttersLocked(dev);
+
+    return ret;
 }
 
 void signalStreamFlush(const camera3_device_t* device, uint32_t num_streams,
