@@ -1,0 +1,20 @@
+//
+// SPDX-FileCopyrightText: 2026 The PixelOS Project
+// SPDX-License-Identifier: Apache-2.0
+//
+
+cc_library_shared {
+    name: "camera.tundra",
+    vendor: true,
+    relative_install_path: "hw",
+    srcs: ["CameraWrapper.cpp"],
+    header_libs: ["libhardware_headers"],
+    shared_libs: [
+        "libcamera_metadata",
+        "liblog",
+    ],
+    cflags: [
+        "-Wall",
+        "-Werror",
+    ],
+}

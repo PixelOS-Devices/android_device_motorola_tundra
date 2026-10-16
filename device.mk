@@ -103,6 +103,7 @@ $(call inherit-product, vendor/motorola/tundra/tundra-vendor.mk)
 PRODUCT_PACKAGES += \
     android.hardware.camera.provider@2.4-impl \
     android.hardware.camera.provider@2.4-service_64 \
+    camera.tundra \
     libcamera2ndk_vendor \
     libgui_vendor \
     libprotobuf-cpp-full \
