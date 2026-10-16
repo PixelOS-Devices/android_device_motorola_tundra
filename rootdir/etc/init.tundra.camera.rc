@@ -1,0 +1,11 @@
+# CamX registers with thermal-engine through /dev/socket/thermal-recv-client,
+# which is only accessible to the oem_2907 (vendor_thermal) group.
+service vendor.camera-provider-2-4 /vendor/bin/hw/android.hardware.camera.provider@2.4-service_64
+    override
+    interface android.hardware.camera.provider@2.4::ICameraProvider legacy/0
+    class hal
+    user cameraserver
+    group audio camera input drmrpc oem_2907
+    ioprio rt 4
+    capabilities SYS_NICE
+    task_profiles CameraServiceCapacity MaxPerformance
