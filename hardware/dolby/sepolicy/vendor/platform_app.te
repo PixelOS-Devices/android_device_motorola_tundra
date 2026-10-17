@@ -6,3 +6,8 @@ hal_client_domain(platform_app, hal_dms)
 allow platform_app_all hal_dms_hwservice:hwservice_manager find;
 binder_call(platform_app_all, hal_dms_server)
 binder_call(hal_dms_server, platform_app_all)
+
+# daxService looks for an AIDL DMS before falling back to the HIDL one,
+# and probes vendor audio props it doesn't need
+dontaudit platform_app_all default_android_service:service_manager find;
+dontaudit platform_app_all vendor_audio_prop:file read;

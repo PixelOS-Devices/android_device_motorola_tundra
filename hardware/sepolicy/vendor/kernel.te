@@ -1,0 +1,4 @@
+# The Awinic speaker amplifier driver tries to read its factory calibration
+# from /mnt/vendor/persist while probing; it reads it again in the audio
+# HAL's context on the first playback, which is allowed
+dontaudit kernel mnt_vendor_file:dir search;

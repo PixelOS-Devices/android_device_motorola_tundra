@@ -1,0 +1,3 @@
+# usbd only grants itself binder_call to servicemanager, not the reverse
+# that binder_use() would, so servicemanager can't deliver its callbacks
+allow servicemanager usbd:binder { call transfer };

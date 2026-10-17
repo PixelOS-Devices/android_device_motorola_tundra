@@ -1,0 +1,2 @@
+# lowi-server works without net_admin
+dontaudit vendor_location self:capability net_admin;

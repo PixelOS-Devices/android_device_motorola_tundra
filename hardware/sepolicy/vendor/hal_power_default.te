@@ -1,0 +1,3 @@
+# The QTI power HAL looks up the AIDL DisplayConfig service for the supported
+# refresh rates; the stock display stack only provides the HIDL one
+dontaudit hal_power_default vendor_hal_vnddisplayconfig_service:service_manager find;

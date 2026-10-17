@@ -1,0 +1,2 @@
+# Moto Camera probes the cgroup hierarchy
+dontaudit platform_app_all cgroup:dir search;
