@@ -1,0 +1,20 @@
+//
+// SPDX-FileCopyrightText: 2026 The PixelOS Project
+// SPDX-License-Identifier: Apache-2.0
+//
+
+cc_library_static {
+    name: "libqtipower-mode.tundra",
+    defaults: ["android.hardware.power-ndk_shared"],
+    vendor: true,
+    srcs: ["PowerMode.cpp"],
+    header_libs: [
+        "libcutils_headers",
+        "qti_powerhal_headers",
+    ],
+    shared_libs: ["libbase"],
+    cflags: [
+        "-Wall",
+        "-Werror",
+    ],
+}

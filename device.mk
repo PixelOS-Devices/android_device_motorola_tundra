@@ -366,6 +366,8 @@ PRODUCT_PACKAGES += \
     android.hardware.power-service-qti \
     vendor.qti.hardware.perf@2.2.vendor
 
+$(call soong_config_set,qtipower,mode_ext_lib,//$(LOCAL_PATH):libqtipower-mode.tundra)
+
 PRODUCT_COPY_FILES += \
     $(LOCAL_PATH)/configs/task_profiles.json:$(TARGET_COPY_OUT_VENDOR)/etc/task_profiles.json
 
