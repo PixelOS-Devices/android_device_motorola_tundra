@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+     SPDX-FileCopyrightText: 2026 The PixelOS Project
+     SPDX-License-Identifier: Apache-2.0
+-->
+<PreferenceScreen
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:title="@string/low_light_refresh_rate_title">
+
+    <com.android.settingslib.widget.FooterPreference
+        android:key="low_light_refresh_rate_footer"
+        android:title="@string/low_light_refresh_rate_footer"
+        android:selectable="false" />
+
+</PreferenceScreen>

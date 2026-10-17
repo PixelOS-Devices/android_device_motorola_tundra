@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+     SPDX-FileCopyrightText: 2026 The PixelOS Project
+     SPDX-License-Identifier: Apache-2.0
+-->
+<resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
+    <string name="app_name">Device settings</string>
+
+    <string name="low_light_refresh_rate_title">Low light refresh rate</string>
+    <string name="low_light_refresh_rate_footer">When the screen is dim, the display stays at this refresh rate to avoid flicker. A lower refresh rate uses less battery.</string>
+    <string name="refresh_rate_hz"><xliff:g id="rate" example="90">%d</xliff:g> Hz</string>
+</resources>
