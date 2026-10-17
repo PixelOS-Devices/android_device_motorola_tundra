@@ -20,9 +20,25 @@ namespace {
 constexpr int kMaxFreqGold = 0x40804000;   // cpu4-6
 constexpr int kMaxFreqPrime = 0x40804200;  // cpu7
 
+// kgsl max_pwrlevel, an index into the speed bin 0 table (0 = 840 MHz).
+constexpr int kGpuMaxPwrlevel = 0x42808000;
+constexpr int kGpuPwrlevel491Mhz = 6;
+
+// Stock 60 fps tuning (perfboostsconfig hint 0x1094): no WALT predictive load
+// and a 5 tick WALT window.
+constexpr int kSchedutilPlGold = 0x41444000;
+constexpr int kSchedutilPlLittle = 0x41444100;
+constexpr int kSchedutilPlPrime = 0x41444200;
+constexpr int kSchedWindowTicks = 0x40CA4000;
+
 int kLowPowerResources[] = {
-        kMaxFreqGold,  1670,
-        kMaxFreqPrime, 1785,
+        kMaxFreqGold,       1670,
+        kMaxFreqPrime,      1785,
+        kGpuMaxPwrlevel,    kGpuPwrlevel491Mhz,
+        kSchedutilPlGold,   0,
+        kSchedutilPlLittle, 0,
+        kSchedutilPlPrime,  0,
+        kSchedWindowTicks,  5,
 };
 
 std::mutex gLock;
