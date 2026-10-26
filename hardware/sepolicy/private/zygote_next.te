@@ -1,0 +1,4 @@
+# The memfd zygote_next copies seapp_contexts into gets the plain tmpfs
+# label on this kernel; without this the native app zygote dies at fork
+# and Chrome's renderers never start
+allow zygote_next tmpfs:file { read write getattr };
