@@ -1,0 +1,14 @@
+[
+  {
+    "repository": "PixelOS-Devices/android_kernel_motorola_tundra",
+    "target_path": "kernel/motorola/tundra"
+  },
+  {
+    "repository": "PixelOS-AOSP/android_hardware_motorola",
+    "target_path": "hardware/motorola"
+  },
+  {
+    "repository": "PixelOS-tundra/proprietary_vendor_motorola_tundra",
+    "target_path": "vendor/motorola/tundra"
+  }
+]
