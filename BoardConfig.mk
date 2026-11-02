@@ -94,7 +94,7 @@ BOARD_MKBOOTIMG_ARGS += --header_version $(BOARD_BOOT_HEADER_VERSION)
 
 TARGET_KERNEL_NO_GCC := true
 TARGET_KERNEL_SOURCE := kernel/motorola/tundra
-TARGET_KERNEL_CONFIG := tundra_defconfig
+TARGET_KERNEL_CONFIG := gki_defconfig vendor/tundra.config
 
 # Partitions
 -include vendor/lineage/config/BoardConfigReservedSize.mk
@@ -133,7 +133,6 @@ TARGET_BOARD_PLATFORM := lahaina
 
 # Properties
 TARGET_ODM_PROP += $(DEVICE_PATH)/props/odm.prop
-TARGET_PRODUCT_PROP += $(DEVICE_PATH)/props/product.prop
 TARGET_SYSTEM_PROP += $(DEVICE_PATH)/props/system.prop
 TARGET_VENDOR_PROP += $(DEVICE_PATH)/props/vendor.prop
 
