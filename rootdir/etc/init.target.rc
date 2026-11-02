@@ -32,7 +32,7 @@ import /vendor/etc/init/hw/init.mmi.rc
 import /vendor/etc/init/hw/init.qti.kernel.rc
 
 on early-init
-    write /proc/sys/kernel/sched_boost 1
+    write /proc/sys/walt/sched_boost 1
     wait /sys/devices/soc0/soc_id
 
 on init
