@@ -373,6 +373,7 @@ PRODUCT_PACKAGES += \
 $(call soong_config_set,qtipower,mode_ext_lib,//$(LOCAL_PATH):libqtipower-mode.tundra)
 
 PRODUCT_COPY_FILES += \
+    $(LOCAL_PATH)/configs/perf/targetresourceconfigs.xml:$(TARGET_COPY_OUT_VENDOR)/etc/perf/targetresourceconfigs.xml \
     $(LOCAL_PATH)/configs/task_profiles.json:$(TARGET_COPY_OUT_VENDOR)/etc/task_profiles.json
 
 PRODUCT_COPY_FILES += \
