@@ -14,6 +14,20 @@ soong_namespace {
     ],
 }
 
+// The perf2 client ships 64-bit only; the stock 32-bit audio HAL and
+// Codec2 dlopen libqti-perfd-client.so too.
+cc_library_shared {
+    name: "libqti-perfd-client-perf2",
+    stem: "libqti-perfd-client",
+    srcs: ["libqti-perfd-client/client.cpp"],
+    shared_libs: [
+        "libbinder_ndk",
+        "liblog",
+    ],
+    compile_multilib: "32",
+    vendor: true,
+}
+
 cc_prebuilt_library_shared {
     name: "libadaptlaunch",
     owner: "qcom",
