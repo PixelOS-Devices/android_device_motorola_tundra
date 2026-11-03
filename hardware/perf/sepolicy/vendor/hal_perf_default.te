@@ -1,0 +1,10 @@
+# perf2 is an AIDL HAL; the legacy-um policy only knows the HIDL perf HAL
+hal_attribute_service(vendor_hal_perf, vendor_hal_perf2_service)
+binder_use(vendor_hal_perf_server)
+binder_use(vendor_hal_perf_client)
+
+# Task boosts and thread priorities, as on sm8450 and newer
+allow vendor_hal_perf_default appdomain:process { getsched setsched };
+allow vendor_hal_perf_default self:capability sys_nice;
+dontaudit vendor_hal_perf_default { domain - appdomain }:process { getsched setsched };
+dontaudit vendor_hal_perf_default system_server:dir search;
