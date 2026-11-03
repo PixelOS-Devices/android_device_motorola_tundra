@@ -651,4 +651,7 @@
     <!-- Defines the sysfs attribute path used by the device
          to enable/disable DC dimming. -->
     <string name="config_deviceDcDimmingSysfsNode">/sys/devices/platform/soc/soc:qcom,dsi-display-primary/dsi_display_dc</string>
+
+    <!-- Report OverScroller flings to the flingboost service -->
+    <bool name="config_flingBoost">true</bool>
 </resources>
