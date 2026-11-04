@@ -36,6 +36,10 @@ PRODUCT_PACKAGES += \
     vendor.qti.hardware.perf2.xml \
     vendor.qti.memory.pasrmanager-V1-ndk
 
+# Fling boost service for OverScroller (config_flingBoost)
+PRODUCT_PACKAGES += \
+    FlingBoost
+
 PRODUCT_COPY_FILES += \
     $(PERF_PATH)/proprietary/vendor/etc/init/vendor.qti.hardware.perf2-hal-service.rc:$(TARGET_COPY_OUT_VENDOR)/etc/init/vendor.qti.hardware.perf2-hal-service.rc \
     $(call find-copy-subdir-files,*,$(PERF_PATH)/configs/perf,$(TARGET_COPY_OUT_VENDOR)/etc/perf) \
