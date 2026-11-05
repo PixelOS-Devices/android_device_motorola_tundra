@@ -273,6 +273,9 @@ ro.incremental.enable=yes
 # SKU
 ro.boot.product.vendor.sku=lahaina
 
+# Thermal
+vendor.thermal.mode=game-perf
+
 # USB
 vendor.usb.use_ffs_mtp=1
 vendor.usb.use_gadget_hal=1
