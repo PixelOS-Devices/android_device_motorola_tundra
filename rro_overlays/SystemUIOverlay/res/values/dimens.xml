@@ -21,10 +21,4 @@
 
     <!-- the padding on the start of the statusbar -->
     <dimen name="status_bar_padding_start">16.0px</dimen>
-
-    <!-- Lower the background blur radius so the dual-Kawase blur composites within the
-         144Hz frame budget on this SoC; stock 34dp/23dp caused JANK_COMPOSER frames
-         when opening the notification shade or app drawer. -->
-    <dimen name="max_shade_window_blur_radius">18dp</dimen>
-    <dimen name="max_window_blur_radius">14px</dimen>
 </resources>
