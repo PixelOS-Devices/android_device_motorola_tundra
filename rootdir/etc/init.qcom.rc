@@ -391,6 +391,13 @@ on property:ro.vendor.hw.dualsim=true
 on property:ro.vendor.hw.dualsim=false
    setprop persist.vendor.radio.multisim.config ""
 
+# Thermal profile, chosen by FlingBoost from the foreground app
+on property:sys.tundra.thermal_mode=game
+    setprop vendor.thermal.mode game-perf
+
+on property:sys.tundra.thermal_mode=default
+    setprop vendor.thermal.mode ""
+
 on property:sys.boot_completed=1
     write /dev/kmsg "Boot completed "
     #Enable UFS clock scaling back

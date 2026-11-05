@@ -7,7 +7,8 @@
 // (frameworks/base android.widget.FlingBoost, enabled by config_flingBoost)
 // and turns them into perf2 fling boosts. Also keeps perf2 told the panel
 // refresh rate, which it would otherwise read from the AIDL DisplayConfig
-// service the display stack doesn't provide.
+// service the display stack doesn't provide. Also switches thermal-engine to
+// its game-perf profile while a game or a benchmark is in the foreground.
 android_app {
     name: "FlingBoost",
     srcs: ["src/**/*.java"],
