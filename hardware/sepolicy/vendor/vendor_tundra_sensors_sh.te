@@ -1,0 +1,12 @@
+# init.tundra.sensors.sh: edits the sensors HAL mandatory list on persist
+type vendor_tundra_sensors_sh, domain;
+type vendor_tundra_sensors_sh_exec, exec_type, vendor_file_type, file_type;
+
+init_daemon_domain(vendor_tundra_sensors_sh)
+
+allow vendor_tundra_sensors_sh vendor_shell_exec:file rx_file_perms;
+allow vendor_tundra_sensors_sh vendor_toolbox_exec:file rx_file_perms;
+
+allow vendor_tundra_sensors_sh mnt_vendor_file:dir search;
+allow vendor_tundra_sensors_sh vendor_persist_sensors_file:dir rw_dir_perms;
+allow vendor_tundra_sensors_sh vendor_persist_sensors_file:file create_file_perms;
