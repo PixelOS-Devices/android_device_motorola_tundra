@@ -1,0 +1,6 @@
+# The Adreno u driver (libadreno_app_profiles) looks up the QSPM AIDL HAL in
+# every process that uses the GPU. Tundra does not run it, and the driver
+# carries on without it, so keep the lookups out of the audit log.
+type vendor_hal_qspmhal_service, hal_service_type, service_manager_type;
+
+dontaudit domain vendor_hal_qspmhal_service:service_manager find;
