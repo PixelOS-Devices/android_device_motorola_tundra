@@ -183,7 +183,7 @@ _tundra_reassemble_split_files() {
             echo "tundra vendorsetup: reassembling $(basename "$target")"
             cat "$target".split.* > "$target"
         fi
-    done < <(find "$vendor_dir" -name '*.split.001' 2>/dev/null)
+    done < <(find "$vendor_dir" -name .git -prune -o -name '*.split.001' -print 2>/dev/null)
 }
 _tundra_reassemble_split_files
 '''
@@ -196,8 +196,16 @@ def get_vendor_path() -> str:
     return os.path.join(root_path, 'vendor', 'motorola', 'tundra')
 
 
+def walk_vendor_files(vendor_path: str):
+    # The vendor tree is a git checkout; never touch its .git (pack files
+    # are well over 100MB).
+    for root, dirs, file_names in os.walk(vendor_path):
+        dirs[:] = [d for d in dirs if d != '.git']
+        yield root, file_names
+
+
 def split_large_files(vendor_path: str):
-    for root, _, file_names in os.walk(vendor_path):
+    for root, file_names in walk_vendor_files(vendor_path):
         for file_name in file_names:
             if SPLIT_SUFFIX in file_name:
                 continue
@@ -220,7 +228,7 @@ def split_large_files(vendor_path: str):
 
 def join_split_files(vendor_path: str):
     first_suffix = f'{SPLIT_SUFFIX}001'
-    for root, _, file_names in os.walk(vendor_path):
+    for root, file_names in walk_vendor_files(vendor_path):
         for file_name in file_names:
             if not file_name.endswith(first_suffix):
                 continue
