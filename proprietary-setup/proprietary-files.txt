@@ -795,7 +795,6 @@ system/etc/permissions/moto-core_services.xml
 system/etc/permissions/moto-settings.xml
 system/framework/com.motorola.frameworks.core.addon.jar
 system/framework/com.motorola.motosignature.jar
-system/framework/moto-checkin.jar
 system/framework/moto-core_services.jar
 system/framework/moto-settings.jar
 system_ext/bin/motsettings
