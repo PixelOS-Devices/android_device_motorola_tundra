@@ -3,3 +3,9 @@
 
 # Sensors mandatory list cleanup
 /(vendor|system/vendor)/bin/init\.tundra\.sensors\.sh                                                     u:object_r:vendor_tundra_sensors_sh_exec:s0
+
+# Adreno libraries loaded into app processes
+/(vendor|system/vendor)/lib(64)?/libVkLayer_q3dtools\.so       u:object_r:same_process_hal_file:s0
+/(vendor|system/vendor)/lib(64)?/libgpudataproducer\.so        u:object_r:same_process_hal_file:s0
+/(vendor|system/vendor)/lib(64)?/libkcl\.so                    u:object_r:same_process_hal_file:s0
+/(vendor|system/vendor)/lib(64)?/libkernelmanager\.so          u:object_r:same_process_hal_file:s0
