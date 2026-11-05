@@ -609,11 +609,7 @@ vendor/lib64/vendor.qti.gnss@4.0-service.so
 vendor/lib64/vendor.qti.gnss@4.0.so
 vendor/lib64/vendor.qti.hardware.qccsyshal@1.0.so
 
-# Graphics - from AOSPA vendor/qcom/common adreno/r (V@0530.55), pinned
-vendor/gpu/kbc/sequence_manifest.bin|cc050a8058904871b3cfabec74521d42f0a61a1f
-vendor/gpu/kbc/unified_kbcs_32.bin|503228f87adc71131aa8134659b00dffe073e973
-vendor/gpu/kbc/unified_kbcs_64.bin|d63c26959dc02b2efc251953e99dc6e7c32e7f6e
-vendor/gpu/kbc/unified_ksqs.bin|8f77dc004796d58acb959e78f4994c5d6b90baef
+# Graphics - 32-bit from AOSPA vendor/qcom/common adreno/r (V@0530.55), pinned
 vendor/lib/egl/eglSubDriverAndroid.so|c4133b15d0a36f0775418724e09ce76681baa16d
 vendor/lib/egl/libEGL_adreno.so;SYMLINK=vendor/lib/libEGL_adreno.so|0b6e09ba4dd6aaf221444fcc9adc40d2e597364a
 vendor/lib/egl/libGLESv1_CM_adreno.so|5ab7196d4c8ae861ff484cb6b1f4b5ac3c9738b4
@@ -635,27 +631,33 @@ vendor/lib/libkernelmanager.so|09e05782cae3b8c5910d069c9d79eb4e58f2801d
 vendor/lib/libllvm-glnext.so|60c4a1792b96932ca027060a939a7ef155e52e01
 vendor/lib/libllvm-qcom.so|01afd4f1a88d6fcd4e2123aa2e13add8ad4339fc
 vendor/lib/vendor.qti.qspmhal@1.0.so|736226264356bb89b73d81922f73b7f2b83540bc
-vendor/lib64/egl/eglSubDriverAndroid.so|2692fd8aac6a9fd49faace2213b2631f7595afad
-vendor/lib64/egl/libEGL_adreno.so;SYMLINK=vendor/lib64/libEGL_adreno.so|74766c6648c64e6af2944fe1a983f1e70f548cbe
-vendor/lib64/egl/libGLESv1_CM_adreno.so|b9e14710b9c2be024e1fdf77d60266423e484047
-vendor/lib64/egl/libGLESv2_adreno.so;SYMLINK=vendor/lib64/libGLESv2_adreno.so|a031aad0bcfd0b47d9ce0e2b2871df60a5af48b6
-vendor/lib64/egl/libq3dtools_adreno.so;SYMLINK=vendor/lib64/libq3dtools_adreno.so|172810bc218ab55fe95f628ab1c0d37833eb0021
-vendor/lib64/egl/libq3dtools_esx.so|5b1f30484211b84f802d3aaccddd728cd0dcbc70
-vendor/lib64/hw/vulkan.adreno.so|ce27b014f47e93fa55096f5d50d686fbe12c3e8f
+
+# Graphics - 64-bit from AOSPA vendor/qcom/common adreno/u (V@0762.10), pinned
+vendor/lib64/egl/eglSubDriverAndroid.so|67b271cbce4b53cc380a0d1ce3604a7cc7b14cab
+vendor/lib64/egl/libEGL_adreno.so;SYMLINK=vendor/lib64/libEGL_adreno.so|f2f96b08cec4002ca6bb5763d4f0835ce52a885c
+vendor/lib64/egl/libGLESv1_CM_adreno.so|3a2255d7206af894f5af9010e2054e1bc45e4fa6
+vendor/lib64/egl/libGLESv2_adreno.so;SYMLINK=vendor/lib64/libGLESv2_adreno.so|cc69a69161ad06ec583d43bf12a4a27aed882d7c
+vendor/lib64/egl/libVkLayer_ADRENO_qprofiler.so|dd67660c3180cc7a97fa4214d3f6f199836ca51b
+vendor/lib64/egl/libq3dtools_adreno.so;SYMLINK=vendor/lib64/libq3dtools_adreno.so|fb333261feb3c25d1daab5e10d770fab753cb82e
+vendor/lib64/egl/libq3dtools_esx.so|5ace7b7d4f7c900c34dad0b4d5d43a6178020f66
+vendor/lib64/hw/vulkan.adreno.so|a64e35054dd4c4540d163646251d43e35bc943f4
+vendor/lib64/libCB.so|1ef736c7a185234a46ca65d0ab68c058eac93b9f
+vendor/lib64/libOpenCL.so|07c0984f0c662768fb16c5927d086105a734f7b0
+vendor/lib64/libadreno_app_profiles.so|235286c8c63357cbc8f1cb5c046ac75a9dc219e8
+vendor/lib64/libadreno_utils.so|601718db1fdaf8b23baf6b8316e4eb9732d9274b
+vendor/lib64/libgpudataproducer.so|ae1e97612796a06a629f56ffb0dca4afb325b6ce
+vendor/lib64/libgsl.so|901810f1c5994216c75c34249eb984e07ed8b00e
+vendor/lib64/libkcl.so|dd6ce2aa587de7f382b406ae2d1f9d7e9d535a8b
+vendor/lib64/libkernelmanager.so|48f239032f4fec085daac4dc6b6eeacc0de4f846
+vendor/lib64/libllvm-glnext.so|30b836edeb5bc8bdf7ad78b1703e081e8b625d3d
+vendor/lib64/libllvm-qcom.so|040c88390ab733fed98365ef7b54cf54006b0e6c
+vendor/lib64/libllvm-qgl.so|af6dae6457b6eb2c23bbc00d7be2b6c4853d571a
+# u has no C2D; keep the adreno/r ones for libc2d_helper (camera)
 vendor/lib64/libC2D2.so|0b4aa67ef7e86df61a1bfd7dfd4680e0f0d7104c
-vendor/lib64/libCB.so|c458543bc706d0dcfac756a6e86e2654592f8b16
-vendor/lib64/libOpenCL.so|76d6d5f9e89d896665fdd06cbede3e21c92c8068
-vendor/lib64/libVkLayer_q3dtools.so|4cb0662d41c0fb39c6c7d5daa7db2e73d3b5f457
-vendor/lib64/libadreno_app_profiles.so|19fdab3bda70acad8e28d82cb1a3ed49c74fcf02
-vendor/lib64/libadreno_utils.so|240872ec23febc6ca7b254dbb38b7218b86f6dd5
 vendor/lib64/libc2d30_bltlib.so|e330210916d482cdbf6fe942145a664679fa9c88
-vendor/lib64/libgpudataproducer.so|7ba51b163995aecad820d53a7f968902482da22e
-vendor/lib64/libgsl.so|8fd5b9c8e17c876544d416b694d7c2e8c96fe146
-vendor/lib64/libkcl.so|505c6488d7c2c34ac6bcc578e6e90098553e5f4f
-vendor/lib64/libkernelmanager.so|6e34cfed1b61ef27ac3740cf477e1ed836695513
-vendor/lib64/libllvm-glnext.so|864e52831a8c18e10da5674288c371598f4d4173
-vendor/lib64/libllvm-qcom.so|f6af31fb74163e3341918c861bece94b8feecc08
-vendor/lib64/vendor.qti.qspmhal@1.0.so|b24925548b969a7745955bbd48069207aa5889fc
+# QSPM AIDL client, needed by u libadreno_app_profiles (AOSPA vendor/qcom/common perf)
+vendor/lib64/libqspm-mem-utils-vendor.so|5286e64fd4f53006994fe27700c7c3b708461850
+vendor/lib64/vendor.qti.qspmhal-V1-ndk.so|160aced08983cd6039500405ca8dec357dba4204
 
 # Graphics firmware
 vendor/firmware/a615_zap.b00
