@@ -1,0 +1,16 @@
+//
+// SPDX-License-Identifier: Apache-2.0
+//
+
+// No-op replacement for Motorola's moto-checkin shared library. The stock
+// jar wraps com.motorola.android.provider.CheckinEvent from Motorola's
+// framework, which this ROM doesn't ship, so MotoDolbyUI's daily usage
+// check-in crashed with NoClassDefFoundError. Same classes and methods
+// (minus getSerializationType(), whose return type is Motorola-only and
+// unused); nothing is recorded or sent.
+java_library {
+    name: "moto-checkin",
+    srcs: ["src/**/*.java"],
+    sdk_version: "core_current",
+    installable: true,
+}
