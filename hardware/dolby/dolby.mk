@@ -59,6 +59,10 @@ PRODUCT_PACKAGES += \
 PRODUCT_PACKAGES += \
     init.dolby.rc
 
+# No-op moto-checkin for MotoDolbyUI's usage check-in
+PRODUCT_PACKAGES += \
+    moto-checkin
+
 # Overlays    
 PRODUCT_PACKAGES += \
     DolbyFrameworksResCommon
