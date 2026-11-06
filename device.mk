@@ -311,6 +311,10 @@ PRODUCT_PACKAGES += \
 PRODUCT_PACKAGES += \
     TundraParts
 
+# Thermal
+PRODUCT_COPY_FILES += \
+    $(LOCAL_PATH)/configs/thermal/thermal-engine-tundra-charging.conf:$(TARGET_COPY_OUT_VENDOR)/etc/thermal-engine-tundra-charging.conf
+
 # Native libraries whitelist
 PRODUCT_COPY_FILES += \
     $(LOCAL_PATH)/configs/public.libraries.txt:$(TARGET_COPY_OUT_VENDOR)/etc/public.libraries.txt
