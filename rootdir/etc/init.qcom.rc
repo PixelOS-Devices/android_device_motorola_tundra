@@ -391,9 +391,12 @@ on property:ro.vendor.hw.dualsim=true
 on property:ro.vendor.hw.dualsim=false
    setprop persist.vendor.radio.multisim.config ""
 
-# Thermal profile, chosen by FlingBoost from the foreground app
+# Thermal profile, chosen by FlingBoost from the foreground app and the power state
 on property:sys.tundra.thermal_mode=game
     setprop vendor.thermal.mode game-perf
+
+on property:sys.tundra.thermal_mode=charging
+    setprop vendor.thermal.mode charging
 
 on property:sys.tundra.thermal_mode=default
     setprop vendor.thermal.mode ""
