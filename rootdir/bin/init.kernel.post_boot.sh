@@ -166,6 +166,12 @@ echo 10 10 10 10 10 10 10 95 > /proc/sys/walt/sched_coloc_busy_hyst_cpu_busy_pct
 # binder activity tasks
 echo 325 > /proc/sys/walt/walt_low_latency_task_threshold
 
+# Report a doubled max frequency on the big cores to apps using these
+# libraries, so that their CPU detection picks the big cores. The perf HAL
+# still writes these to /proc/sys/kernel, where they no longer exist.
+echo "libunity.so, libfb.so" > /proc/sys/walt/sched_lib_name
+echo 240 > /proc/sys/walt/sched_lib_mask_force
+
 # cpuset parameters
 echo 0-3 > /dev/cpuset/background/cpus
 echo 0-3 > /dev/cpuset/system-background/cpus
