@@ -357,7 +357,9 @@ PRODUCT_PACKAGES += \
     FrameworksResOverlay \
     SettingsOverlay \
     SettingsProviderOverlay \
-    SystemUIOverlay
+    SystemUIOverlay \
+    TurboPowerSettingsOverlay \
+    TurboPowerSystemUIOverlay
 
 # Partitions
 PRODUCT_BUILD_SUPER_PARTITION := false

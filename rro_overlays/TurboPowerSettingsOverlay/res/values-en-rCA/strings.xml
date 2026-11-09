@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="battery_info_status_charging_fast">TurboPower 68W</string>
+    <string name="battery_info_status_charging_fast_v2">TurboPower 68W</string>
+</resources>
