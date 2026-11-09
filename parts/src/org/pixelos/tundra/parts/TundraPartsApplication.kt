@@ -12,5 +12,6 @@ class TundraPartsApplication : Application() {
     override fun onCreate() {
         super.onCreate()
         TurboPowerLabel.start(this)
+        CamcorderMic.start(this)
     }
 }
