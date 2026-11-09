@@ -441,6 +441,7 @@
 
     <ctl name="aw_dev_0_prof" value="Music" />
     <ctl name="aw_dev_1_prof" value="Music" />
+    <ctl name="aw_dev_1_gain_ctl" value="127" />
 
     <ctl name="aw882xx_rx_switch" value="Disable" />
     <ctl name="aw882xx_tx_switch" value="Disable" />
@@ -2153,6 +2154,8 @@
 
     <path name="voice-handset">
         <path name="handset" />
+        <!-- Moto's HAL lowers the earpiece amp in calls -->
+        <ctl name="aw_dev_1_gain_ctl" value="94" />
     </path>
 
     <path name="voice-handset-tmus">
