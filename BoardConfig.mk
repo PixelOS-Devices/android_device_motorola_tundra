@@ -90,8 +90,6 @@ BOARD_KERNEL_CMDLINE += firmware_class.path=/vendor/firmware_mnt/image
 BOARD_KERNEL_CMDLINE += androidboot.hab.product=tundra
 # ro.bpf.kver_override: netd's getsockoptTest() expects the 5.10 errno
 BOARD_KERNEL_CMDLINE += k61.bpf_reject_eperm
-BOARD_KERNEL_CMDLINE += k61.pmsg_drop=sscrpcd,adsprpcd,audioadsprpcd,cdsprpcd
-BOARD_KERNEL_CMDLINE += log_buf_len=4M printk.devkmsg=ratelimit no_console_suspend
 
 BOARD_RAMDISK_USE_LZ4 := true
 BOARD_MKBOOTIMG_ARGS += --header_version $(BOARD_BOOT_HEADER_VERSION)
