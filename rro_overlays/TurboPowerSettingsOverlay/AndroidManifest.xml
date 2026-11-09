@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+     SPDX-FileCopyrightText: 2026 The PixelOS Project
+     SPDX-License-Identifier: Apache-2.0
+-->
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="org.pixelos.tundra.turbopower.settings">
+
+    <application android:hasCode="false" />
+
+    <overlay
+        android:targetPackage="com.android.settings"
+        android:isStatic="false"
+        android:priority="10" />
+</manifest>

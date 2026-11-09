@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="keyguard_plugged_in_charging_fast">%s • TurboPower 68W</string>
+    <string name="keyguard_indication_charging_time_fast">%2$s • TurboPower 68W • Full in %1$s</string>
+    <string name="battery_info_status_charging_fast">TurboPower 68W</string>
+    <string name="battery_info_status_charging_fast_v2">TurboPower 68W</string>
+</resources>

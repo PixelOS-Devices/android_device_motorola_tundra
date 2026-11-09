@@ -1,0 +1,4 @@
+# TundraParts switches the TurboPower charging label overlays
+allow platform_app_all overlay_service:service_manager find;
+# and follows the mmi_charger wattage uevents for it
+allow platform_app_all self:netlink_kobject_uevent_socket { create bind read getopt setopt };
