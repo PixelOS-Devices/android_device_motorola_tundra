@@ -2,47 +2,51 @@
 <displayConfiguration>
     <screenBrightnessMap>
         <point>
-            <value>0.00219780</value>
-            <nits>2.0</nits>
+            <value>0.07737535</value>
+            <nits>4.98</nits>
         </point>
         <point>
-            <value>0.00934538</value>
+            <value>0.07768164</value>
+            <nits>5.0</nits>
+        </point>
+        <point>
+            <value>0.10132388</value>
             <nits>7.0</nits>
         </point>
         <point>
-            <value>0.01363393</value>
+            <value>0.12834357</value>
             <nits>10.0</nits>
         </point>
         <point>
-            <value>0.01649296</value>
+            <value>0.14185342</value>
             <nits>12.0</nits>
         </point>
         <point>
-            <value>0.03364715</value>
+            <value>0.20264775</value>
             <nits>24.0</nits>
         </point>
         <point>
-            <value>0.13514277</value>
+            <value>0.39854056</value>
             <nits>95.0</nits>
         </point>
         <point>
-            <value>0.15801506</value>
+            <value>0.43231518</value>
             <nits>111.0</nits>
         </point>
         <point>
-            <value>0.21233667</value>
+            <value>0.49648701</value>
             <nits>149.0</nits>
         </point>
         <point>
-            <value>0.27380586</value>
+            <value>0.55052639</value>
             <nits>192.0</nits>
         </point>
         <point>
-            <value>0.35957682</value>
+            <value>0.62820804</value>
             <nits>252.0</nits>
         </point>
         <point>
-            <value>0.85811967</value>
+            <value>0.85787546</value>
             <nits>500.0</nits>
         </point>
         <point>
