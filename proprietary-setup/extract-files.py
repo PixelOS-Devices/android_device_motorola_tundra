@@ -121,6 +121,16 @@ blob_fixups: blob_fixups_user_type = {
         'vendor/lib64/libsnapdragoncolor-manager.so',
     ): blob_fixup()
         .replace_needed('libtinyxml2.so', 'libtinyxml2-v34.so'),
+    # Record camcorder audio in stereo so both mics are captured. The stock
+    # profiles are mono, so camera apps record from a single (bottom) mic;
+    # the camcorder-mic-bf route then has nothing to feed its second channel.
+    # Only the AAC video profiles are touched, not the AMR-NB (MMS) ones.
+    (
+        'vendor/etc/media_profiles_V1_0.xml',
+        'vendor/etc/media_profiles_lahaina.xml',
+        'vendor/etc/media_profiles_vendor.xml',
+    ): blob_fixup()
+        .regex_replace(r'(codec="aac"[^>]*?)channels="1"', r'\1channels="2"'),
 }  # fmt: skip
 
 # extract-utils only extracts whole APEX files, pull the VNDK v30 libraries
