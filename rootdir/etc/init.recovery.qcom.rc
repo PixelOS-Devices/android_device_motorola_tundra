@@ -19,3 +19,19 @@ on init
 on property:ro.boot.usbcontroller=*
     setprop sys.usb.controller ${ro.boot.usbcontroller}
     write /sys/class/udc/${ro.boot.usbcontroller}/device/../mode peripheral
+
+# The dwc3 UDC only registers once ucsi_glink has probed, after the ADSP is up
+# (about 9 s into a recovery boot on 6.18), while fastbootd and adbd can set
+# sys.usb.ffs.ready earlier. init.rc writes the UDC once and doesn't retry,
+# so wait for it and bind the gadget here.
+on property:sys.usb.config=fastboot && property:sys.usb.ffs.ready=1 && property:sys.usb.configfs=1
+    wait /sys/class/udc/${sys.usb.controller} 30
+    write /config/usb_gadget/g1/UDC ${sys.usb.controller}
+
+on property:sys.usb.config=adb && property:sys.usb.ffs.ready=1 && property:sys.usb.configfs=1
+    wait /sys/class/udc/${sys.usb.controller} 30
+    write /config/usb_gadget/g1/UDC ${sys.usb.controller}
+
+on property:sys.usb.config=sideload && property:sys.usb.ffs.ready=1 && property:sys.usb.configfs=1
+    wait /sys/class/udc/${sys.usb.controller} 30
+    write /config/usb_gadget/g1/UDC ${sys.usb.controller}
