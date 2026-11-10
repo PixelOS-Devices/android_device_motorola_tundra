@@ -88,8 +88,6 @@ BOARD_KERNEL_CMDLINE += pcie_ports=compat iptable_raw.raw_before_defrag=1
 BOARD_KERNEL_CMDLINE += ip6table_raw.raw_before_defrag=1
 BOARD_KERNEL_CMDLINE += firmware_class.path=/vendor/firmware_mnt/image
 BOARD_KERNEL_CMDLINE += androidboot.hab.product=tundra
-# ro.bpf.kver_override: netd's getsockoptTest() expects the 5.10 errno
-BOARD_KERNEL_CMDLINE += k61.bpf_reject_eperm
 
 BOARD_RAMDISK_USE_LZ4 := true
 BOARD_MKBOOTIMG_ARGS += --header_version $(BOARD_BOOT_HEADER_VERSION)
@@ -135,7 +133,6 @@ TARGET_BOARD_PLATFORM := lahaina
 
 # Properties
 TARGET_ODM_PROP += $(DEVICE_PATH)/props/odm.prop
-TARGET_PRODUCT_PROP += $(DEVICE_PATH)/props/product.prop
 TARGET_SYSTEM_PROP += $(DEVICE_PATH)/props/system.prop
 TARGET_VENDOR_PROP += $(DEVICE_PATH)/props/vendor.prop
 
