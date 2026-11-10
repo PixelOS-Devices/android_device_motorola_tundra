@@ -116,11 +116,12 @@ blob_fixups: blob_fixups_user_type = {
         .add_needed('libcrypto_shim.so'),
     'vendor/lib64/sensors.moto.so': blob_fixup()
         .add_needed('libbase_shim.so'),
-    (
-        'vendor/lib64/libdpps.so',
-        'vendor/lib64/libsnapdragoncolor-manager.so',
-    ): blob_fixup()
+    'vendor/lib64/libdpps.so': blob_fixup()
         .replace_needed('libtinyxml2.so', 'libtinyxml2-v34.so'),
+    # Wrapped by hardware/display (libsnapdragoncolor-manager)
+    'vendor/lib64/libsnapdragoncolor-manager-stock.so': blob_fixup()
+        .replace_needed('libtinyxml2.so', 'libtinyxml2-v34.so')
+        .fix_soname(),
     # Record camcorder audio in stereo so both mics are captured. The stock
     # profiles are mono, so camera apps record from a single (bottom) mic;
     # the camcorder-mic-bf route then has nothing to feed its second channel.

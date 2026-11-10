@@ -1,0 +1,23 @@
+//
+// SPDX-FileCopyrightText: 2026 The PixelOS Project
+// SPDX-License-Identifier: Apache-2.0
+//
+
+cc_library_shared {
+    name: "libsnapdragoncolor-manager",
+    vendor: true,
+    compile_multilib: "64",
+    srcs: ["SnapdragonColorWrapper.cpp"],
+    include_dirs: [
+        "hardware/qcom-caf/sm8350/display/sdm/include",
+        "vendor/qcom/opensource/commonsys-intf/display/include",
+    ],
+    shared_libs: [
+        "libdl",
+        "liblog",
+    ],
+    cflags: [
+        "-Wall",
+        "-Werror",
+    ],
+}
